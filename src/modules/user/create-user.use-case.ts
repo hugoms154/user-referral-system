@@ -6,7 +6,14 @@ import { UserRepository } from "./user.repository";
 export class CreateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
   
-  exec(params: CreateUserModel): Promise<UserModel> {
+  async exec(params: CreateUserModel): Promise<UserModel> {
+    if(params.indicatedBy) {
+      const isReferralCodeValid = await this.userRepository.referralCodeExists(params?.indicatedBy)
+
+      if(!isReferralCodeValid) {
+        throw new Error("invalid referral code.")
+      }
+    }
     return this.userRepository.create(params)
   }
 }
