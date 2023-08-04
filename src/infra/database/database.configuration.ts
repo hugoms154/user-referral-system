@@ -3,7 +3,7 @@ import { Service } from "typedi";
 import { DataSource } from "typeorm";
 
 @Service()
-export class DbConnection {
+export class DbConfiguration {
   private dataSource: DataSource;
 
   constructor() {
