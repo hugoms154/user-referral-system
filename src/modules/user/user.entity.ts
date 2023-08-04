@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("user")
 export class UserEntity {
@@ -8,6 +8,11 @@ export class UserEntity {
   @Column()
   name!: string;
 
-  @Column()
+  @Column({ type: "character varying", unique: true })
+  @Generated('uuid')
   referralCode!: string;
+
+  
+  @Column({ nullable:true })
+  indicatedBy?: string;
 }
