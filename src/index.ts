@@ -1,11 +1,5 @@
 import "reflect-metadata";
-import { GraphQLServer } from "./infra/graphql/graphql-server";
-import { DbConnection } from "./infra/database/data-source";
+import { Application } from "./infra";
 
-(async() => {
-  const dbConnection = new DbConnection();
+Application.init()
 
-  await dbConnection.connect();
-  await GraphQLServer.start()
-})();
-console.log("Done");
