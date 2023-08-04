@@ -8,10 +8,15 @@ export class UserEntity {
   @Column()
   name!: string;
 
+  @Column({ unique: true })
+  email!: string;
+
+  @Column()
+  password!: string;
+
   @Column({ type: "character varying", unique: true })
   @Generated('uuid')
   referralCode!: string;
-
   
   @Column({ nullable:true })
   indicatedBy?: string;
