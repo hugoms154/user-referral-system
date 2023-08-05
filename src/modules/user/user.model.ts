@@ -14,4 +14,5 @@ export interface CreateUserModel {
   indicatedBy?: string;
 }
 
-export interface UserModelWithOutPassword extends Omit<UserModel, 'password'> {}
+export type UserModelWithOutPassword = Omit<UserModel, 'password'>;
+export type GetUserModel = Pick<UserModel, 'id'>;

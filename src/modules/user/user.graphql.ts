@@ -1,5 +1,5 @@
 import { Field, ID, InputType, ObjectType } from "type-graphql";
-import { CreateUserModel, UserModelWithOutPassword } from "./user.model";
+import { CreateUserModel, GetUserModel, UserModelWithOutPassword } from "./user.model";
 
 @ObjectType()
 export class UserResponse implements UserModelWithOutPassword {
@@ -32,4 +32,10 @@ export class CreateUserInput implements CreateUserModel {
   
   @Field({ nullable: true })
   indicatedBy?: string;
+}
+
+@InputType()
+export class GetUserInput implements GetUserModel {
+  @Field(() => ID)
+  id!: number;
 }
