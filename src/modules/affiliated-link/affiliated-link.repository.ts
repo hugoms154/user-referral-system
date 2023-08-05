@@ -13,6 +13,11 @@ export class AffiliatedLinkRepository {
     return this.repository.save({ user: { id: userId }, ...params })
   }
 
+  async increaseViewCount(id: string): Promise<void> {
+    const affiliatedLink = await this.findByCode(id)
+    await this.repository.update(id, { viewsCount: affiliatedLink.viewsCount + 1 })
+  }
+
   findByCode(code: string): Promise<AffiliatedLinkModel> {
     return this.repository.findOneOrFail({
       where: {

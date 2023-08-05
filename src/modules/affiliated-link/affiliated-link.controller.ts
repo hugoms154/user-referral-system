@@ -1,10 +1,10 @@
 import { Service } from "typedi";
-import { GetAffiliatedLinkUseCase } from "./get-affiliated-link.use-case";
+import { AccessAffiliatedLinkUseCase } from "./access-affiliated-link.use-case";
 import { ControllerHandler } from "../../infra/rest/controller.handler";
 
 @Service()
 export class AffiliatedLinkController {
-  constructor(private readonly getAffiliatedLink: GetAffiliatedLinkUseCase) {}
+  constructor(private readonly getAffiliatedLink: AccessAffiliatedLinkUseCase) {}
 
   async redirectToAffiliatedLinkHandler({ req, res }: ControllerHandler): Promise<void> {
     const { affiliatedCode } = req.params

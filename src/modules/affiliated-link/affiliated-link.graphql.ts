@@ -8,6 +8,9 @@ export class AffiliatedLinkResponse implements AffiliatedLinkModel {
 
   @Field()
   sourceLink!: string;
+  
+  @Field(() => Int)
+  viewsCount!: number;
 }
 
 @InputType()

@@ -12,4 +12,7 @@ export class AffiliatedLinkEntity {
 
   @Column()
   sourceLink!: string;
+
+  @Column({ default: 0 })
+  viewsCount!: number
 }

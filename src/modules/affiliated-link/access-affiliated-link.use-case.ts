@@ -4,15 +4,17 @@ import { AffiliatedLinkModel, GetAffiliatedLinkModel } from "./affiliated-link.m
 
 
 @Service()
-export class GetAffiliatedLinkUseCase {
-  constructor(private readonly userRepository: AffiliatedLinkRepository) {}
+export class AccessAffiliatedLinkUseCase {
+  constructor(private readonly affiliatedLinkRepository: AffiliatedLinkRepository) {}
   
   async exec(params: GetAffiliatedLinkModel): Promise<AffiliatedLinkModel> {
-    const isAffiliatedCodeValid = await this.userRepository.findByCode(params.code);
+    const isAffiliatedCodeValid = await this.affiliatedLinkRepository.findByCode(params.code);
 
     if(!isAffiliatedCodeValid) {
       throw new Error("invalid affiliated code.");
     }
+
+    await this.affiliatedLinkRepository.increaseViewCount(isAffiliatedCodeValid.id);
     
     return isAffiliatedCodeValid;
   }

@@ -1,6 +1,7 @@
 export interface AffiliatedLinkModel {
   id: string;
   sourceLink: string;
+  viewsCount: number;
 }
 
 export interface CreateAffiliatedLinkModel {

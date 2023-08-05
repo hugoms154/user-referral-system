@@ -1,10 +1,9 @@
 import { ApolloServer } from "apollo-server-express";
 import express, { Request, Response } from "express";
+import http from "http";
 import path from "node:path";
 import { buildSchema } from "type-graphql";
 import Container from "typedi";
-import http from "http";
-import { AffiliatedLinkController } from "../../modules/affiliated-link/affiliated-link.controller";
 import { affiliatedRouter } from "../../modules/affiliated-link/affiliated-link.routes";
 
 export type ServerContext = { req: Request; res: Response }
@@ -28,7 +27,7 @@ export class GraphQLServer {
 
      await server.start();
      server.applyMiddleware({ app })
-     app.use(affiliatedRouter)
+     app.use('/',affiliatedRouter)
 
      await new Promise((resolve) => resolve(httpServer.listen({ port: 4000 })));
 
