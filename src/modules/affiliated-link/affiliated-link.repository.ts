@@ -9,8 +9,8 @@ export class AffiliatedLinkRepository {
 
   private repository: Repository<AffiliatedLinkEntity> = Container.get(DbConfiguration).getConnection().getRepository(AffiliatedLinkEntity);
 
-  create(params: CreateAffiliatedLinkModel): Promise<AffiliatedLinkModel> {
-    return this.repository.save(params)
+  create({userId, ...params}: CreateAffiliatedLinkModel): Promise<AffiliatedLinkModel> {
+    return this.repository.save({ user: { id: userId }, ...params })
   }
 
   findByCode(code: string): Promise<AffiliatedLinkModel> {
