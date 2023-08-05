@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../user/user.entity";
 
-@Entity("affiliated_links")
-export class AffiliatedLinksEntity {
+@Entity("affiliated_link")
+export class AffiliatedLinkEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: number;
+  id!: string;
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: "user_id" })

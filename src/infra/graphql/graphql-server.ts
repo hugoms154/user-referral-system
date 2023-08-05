@@ -1,7 +1,13 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "apollo-server-express";
+import express, { Request, Response } from "express";
 import path from "node:path";
 import { buildSchema } from "type-graphql";
 import Container from "typedi";
+import http from "http";
+import { AffiliatedLinkController } from "../../modules/affiliated-link/affiliated-link.controller";
+import { affiliatedRouter } from "../../modules/affiliated-link/affiliated-link.routes";
+
+export type ServerContext = { req: Request; res: Response }
 
 export class GraphQLServer {
   static async start() {
@@ -12,12 +18,20 @@ export class GraphQLServer {
       container: Container,
    });
 
-    const server = new ApolloServer({ schema });
+    const app = express();
+    const httpServer = http.createServer(app);
 
-    const { url } = await server.listen({
-      port: 4000 
-    });
+    const server = new ApolloServer({ 
+      schema,
+      context: ({ req, res }) => ({ req, res }) as ServerContext
+     });
 
-    console.log(url);
+     await server.start();
+     server.applyMiddleware({ app })
+     app.use(affiliatedRouter)
+
+     await new Promise((resolve) => resolve(httpServer.listen({ port: 4000 })));
+
+     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
   }
 }

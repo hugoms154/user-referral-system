@@ -16,9 +16,4 @@ export class UserResolver {
   ): Promise<UserModel> {
     return this.createUseCase.exec(params)
   }
-  
-  @Query(() => String)
-  test() {
-    return "ok";
-  }
 }
