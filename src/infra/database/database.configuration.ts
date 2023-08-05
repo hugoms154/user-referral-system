@@ -7,6 +7,7 @@ export class DbConfiguration {
   private dataSource: DataSource;
 
   constructor() {
+    const TWENTY_FOUR_HOURS_MS = 60 * 60 * 24 * 1000;
     this.dataSource = new DataSource({
       type: "postgres",
       host: "localhost",
@@ -16,6 +17,10 @@ export class DbConfiguration {
       database: "user-referral-system",
       entities: [path.join(__dirname, "/../../**/*.entity.{ts,js}")],
       synchronize: true,
+      cache: {
+        type: 'database',
+        duration: TWENTY_FOUR_HOURS_MS,
+      },
     });
   }
 
