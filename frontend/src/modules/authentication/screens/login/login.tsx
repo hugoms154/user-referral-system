@@ -1,13 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { ArrowRight } from "../../../../assets/arrow-right";
+import { Check } from "../../../../assets/check";
 import { Logo } from "../../../../assets/logo";
+import { MessageChat } from "../../../../assets/message-chat";
 import { Warning } from "../../../../assets/warning";
 import { Button } from "../../../../components/button";
 import { Input } from "../../../../components/form";
 import { Message } from "../../../../components/message/message";
 import * as Typography from "../../../../components/typography";
+import { useAuth } from "../../../../context/auth";
 import * as S from "./login.style";
 
 const loginFormSchema = z.object({
@@ -18,23 +22,30 @@ const loginFormSchema = z.object({
 type LoginFormInput = z.infer<typeof loginFormSchema>;
 
 export const LoginPage = () => {
+  const { signIn } = useAuth();
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { isSubmitting, errors, isValid },
   } = useForm<LoginFormInput>({
     resolver: zodResolver(loginFormSchema),
-    mode: "onSubmit",
+    mode: "onBlur",
   });
 
+  const [checked, setChecked] = useState(false);
+
+  function handleCheckboxChange() {
+    setChecked(!checked);
+  }
+
   // async function handleLogin(data: LoginFormInput) {
-  async function handleLogin() {
+  async function handleLogin({ email, password }: LoginFormInput) {
     // const { email, password } = data;
 
     // TODO: async request
-
-    reset();
+    localStorage.setItem(`${import.meta.env.VITE_KEY_STORAGE}:login`, "true");
+    signIn({ email, password });
   }
 
   return (
@@ -44,35 +55,60 @@ export const LoginPage = () => {
 
         <Typography.H1>Entre na sua conta</Typography.H1>
 
-        <form onSubmit={handleSubmit(handleLogin)}>
-          <Input
-            label="E-mail"
-            type="email"
-            placeholder="digite seu e-mail"
-            required
-            error={!!errors.email}
-            {...register("email")}
-          />
+        <S.FormContainer>
+          <form onSubmit={handleSubmit(handleLogin)}>
+            <Input
+              label="E-mail"
+              type="email"
+              placeholder="digite seu e-mail"
+              required
+              error={errors.email?.message || ""}
+              {...register("email")}
+            />
 
-          <Input
-            label="Senha"
-            type="password"
-            required
-            error={!!errors.password}
-            {...register("password")}
-          />
-          {(errors.email || errors.password) && (
-            <Message icon={<Warning />} message="Usuário ou senha incorretos" />
-          )}
+            <Input
+              label="Senha"
+              type="password"
+              link="Esqueci minha senha"
+              required
+              error={errors.password?.message || ""}
+              {...register("password")}
+            />
 
-          <Button
-            label="Entrar"
-            icon={<ArrowRight />}
-            type="submit"
-            disabled={isSubmitting || !isValid}
-          />
-        </form>
+            {(errors.email || errors.password) && (
+              <Message
+                icon={<Warning />}
+                message="Usuário ou senha incorretos"
+              />
+            )}
+
+            <S.CheckboxContainer
+              checked={checked}
+              onClick={handleCheckboxChange}
+            >
+              <S.HiddenCheckbox
+                onChange={handleCheckboxChange}
+                checked={checked}
+              />
+              <S.Checkbox checked={checked}>{checked && <Check />}</S.Checkbox>
+              <S.CheckBoxText checked={checked}>
+                Me mantenha conectado
+              </S.CheckBoxText>
+            </S.CheckboxContainer>
+
+            <Button
+              label="Entrar"
+              rightIcon={<ArrowRight />}
+              type="submit"
+              disabled={isSubmitting || !isValid}
+            />
+          </form>
+        </S.FormContainer>
       </S.Container>
+
+      <S.MessageIconWrapper>
+        <MessageChat />
+      </S.MessageIconWrapper>
     </S.Root>
   );
 };

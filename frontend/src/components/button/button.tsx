@@ -5,15 +5,22 @@ export type ButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
-  icon: ReactNode;
+  rightIcon?: ReactNode;
+  leftIcon?: ReactNode;
   label: string;
 };
 
-export const Button = ({ icon, label, ...rest }: ButtonProps) => {
+export const Button = ({
+  rightIcon,
+  leftIcon,
+  label,
+  ...rest
+}: ButtonProps) => {
   return (
     <ButtonRoot {...rest}>
+      {leftIcon && <>{leftIcon}</>}
       {label}
-      {icon}
+      {rightIcon && <>{rightIcon}</>}
     </ButtonRoot>
   );
 };

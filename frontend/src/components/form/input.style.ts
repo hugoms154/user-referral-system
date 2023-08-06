@@ -1,20 +1,36 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-type InputRootProps = { error: boolean };
+type InputRootProps = {
+  error: string;
+  outline?: boolean;
+};
 
 export const InputRoot = styled.div<InputRootProps>`
-  border-radius: 0.5rem;
-  ${({error}) => error ? "border: 1px solid var(--red);" : "border: 1px solid var(--light-gray-border);"}
-  
   background: var(--background-content);
-  
+
   display: flex;
   height: 3.5rem;
-  padding: 0rem 0.25rem;
   align-items: center;
   margin: 0.5rem 0 1rem 0;
   align-self: stretch;
   padding: 0 1.5rem;
+
+  border-width: 0.125rem;
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-color: var(--light-gray-border);
+
+  ${({ outline }) =>
+    outline &&
+    css`
+      border-color: var(--dark-purple);
+    `}
+
+  ${({ error }) =>
+    error.length > 0 &&
+    css`
+      border-color: var(--red);
+    `};
 
   & input {
     height: 100%;
@@ -34,5 +50,24 @@ export const ButtonPassword = styled.button`
   outline: none;
   :focus {
     box-shadow: none;
+  }
+`;
+
+export const InputTextContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const LinkText = styled.a`
+  color: var(--link);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--dark-purple);
+    transition: 0.3s linear;
   }
 `;

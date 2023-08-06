@@ -4,29 +4,49 @@ import {
   forwardRef,
   useState,
 } from "react";
-import * as S from "./input.style";
-import * as Typography from "../typography";
-import { EyeOff } from "../../assets/eye-off";
 import { Eye } from "../../assets/eye";
+import { EyeOff } from "../../assets/eye-off";
+import * as Typography from "../typography";
+import * as S from "./input.style";
 
 type TypesInput = "text" | "password" | "email" | "date" | "number";
 
 export interface InputProps extends HTMLProps<HTMLInputElement> {
   type?: TypesInput;
   label: string;
-  error?: boolean;
+  error: string;
+  link?: string;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { type, label, error = false, ...rest },
+  { type, label, error = "", link, ...rest },
   ref
 ) => {
   const [customType, setCustomType] = useState(type);
 
+  const [showOutline, setShowOutline] = useState(false);
+
+  function handleFocus() {
+    setShowOutline(true);
+  }
+
+  function handleBlur() {
+    setShowOutline(false);
+  }
+
   return (
     <>
-      <Typography.InputLabel>{label}</Typography.InputLabel>
-      <S.InputRoot error={error}>
+      <S.InputTextContainer>
+        <Typography.InputLabel>{label}</Typography.InputLabel>
+        {link && <S.LinkText>{link}</S.LinkText>}
+      </S.InputTextContainer>
+
+      <S.InputRoot
+        error={error}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        outline={showOutline}
+      >
         <input {...rest} type={customType} ref={ref} />
 
         {type === "password" && (

@@ -1,4 +1,4 @@
-export function ArrowRight({color = "#000"}) {
+export function ArrowRight() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@ export function ArrowRight({color = "#000"}) {
       viewBox="0 0 20 20"
     >
       <path
-        stroke={color}
+        stroke="#FFFFFF"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.25"
