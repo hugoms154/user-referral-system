@@ -6,19 +6,24 @@ import { CreateUserModel, UserModel } from "./user.model";
 
 @Service()
 export class UserRepository {
-
-  private repository: Repository<UserEntity> = Container.get(DbConfiguration).getConnection().getRepository(UserEntity)
+  private repository: Repository<UserEntity> = Container.get(DbConfiguration)
+    .getConnection()
+    .getRepository(UserEntity);
 
   create(params: CreateUserModel): Promise<UserModel> {
-    return this.repository.save(params)
+    return this.repository.save(params);
   }
 
   findById(id: number): Promise<UserModel> {
-    return this.repository.findOneByOrFail({ id })
+    return this.repository.findOneByOrFail({ id });
+  }
+
+  findByEmail(email: string): Promise<UserModel> {
+    return this.repository.findOneByOrFail({ email });
   }
 
   async referralCodeExists(referralCode: string): Promise<boolean> {
-    const count = await this.repository.count({ where: { referralCode }})
+    const count = await this.repository.count({ where: { referralCode } });
     return count > 0;
   }
 }
