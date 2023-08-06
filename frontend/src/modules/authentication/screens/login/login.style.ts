@@ -29,7 +29,7 @@ type CheckBoxContainerProps = {
 
 export const CheckboxContainer = styled.div<CheckBoxContainerProps>`
   margin-top: 1rem;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
 
   display: flex;
   align-items: center;
