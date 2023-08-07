@@ -1,7 +1,10 @@
 import { ApolloError, useMutation } from "@apollo/client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AUTHENTICATE_MUTATION } from "../../data/graphql";
+import {
+  AUTHENTICATE_MUTATION,
+  CREATE_USER_MUTATION,
+} from "../../data/graphql";
 import {
   AuthContextData,
   Authenticate,
@@ -17,18 +20,23 @@ const AuthProvider = ({ children }: ChildrenData) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-  const [authenticateQuery, { loading, reset }] = useMutation(
-    AUTHENTICATE_MUTATION
-  );
+  const [
+    authenticateMutation,
+    { loading: authenticateLoading, reset: authenticateReset },
+  ] = useMutation(AUTHENTICATE_MUTATION);
+  const [
+    createUserMutation,
+    { loading: createUserLading, reset: createUserReset },
+  ] = useMutation(CREATE_USER_MUTATION);
 
   const signIn = async ({ email, password }: PayloadLogin) => {
-    reset();
+    authenticateReset();
 
     const { data, error } = await new Promise<{
       data: Authenticate | null;
       error: any;
     }>((resolve) => {
-      authenticateQuery({
+      authenticateMutation({
         variables: {
           data: {
             email,
@@ -45,7 +53,7 @@ const AuthProvider = ({ children }: ChildrenData) => {
     });
 
     if (error) {
-      return { data, loading, error };
+      return { data, loading: authenticateLoading, error };
     }
 
     const user: User | null = data?.authenticate.user
@@ -54,15 +62,26 @@ const AuthProvider = ({ children }: ChildrenData) => {
     setUser(user);
     setIsLogged(true);
     navigate("/");
-    return { data, loading, error };
+    return { data, loading: authenticateLoading, error };
   };
 
   const signUp = ({ email, password, referralCode }: PayloadSignUp) => {
-    // consultar da api
-    console.log("email: ", email);
-    console.log("password: ", password);
-    console.log("password: ", referralCode);
-    setIsLogged(true);
+    createUserReset();
+    createUserMutation({
+      variables: {
+        data: {
+          name: email.split("@")[0],
+          password,
+          email,
+          indicatedBy: referralCode ?? null,
+        },
+      },
+      onCompleted() {
+        signIn({ email, password });
+        setIsLogged(true);
+        navigate("/");
+      },
+    });
   };
 
   const signOut = () => {
