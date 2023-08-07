@@ -1,4 +1,4 @@
-export function Copy() {
+export function Copy({ color = '#1E1A34' }: {color?: string}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +9,7 @@ export function Copy() {
     >
       <g clipPath="url(#clip0_235_865)">
         <path
-          stroke="#1E1A34"
+          stroke={color}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.5"
@@ -18,7 +18,7 @@ export function Copy() {
       </g>
       <defs>
         <clipPath id="clip0_235_865">
-          <path fill="#1E1A34" d="M0 0H16V16H0z"></path>
+          <path fill={color} d="M0 0H16V16H0z"></path>
         </clipPath>
       </defs>
     </svg>

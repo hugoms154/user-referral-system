@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Button } from '../button';
+import styled from "styled-components";
+import { Button } from "../button";
 
 export const Container = styled.div`
   background-color: var(--dark-purple);
@@ -9,6 +9,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 1rem;
 `;
 
 export const ContainerLogo = styled.div`
@@ -25,7 +26,7 @@ export const ContainerOptions = styled.div`
 `;
 
 export const CopyButtonContainer = styled.div`
-  min-width: 13.125rem; 
+  min-width: 13.125rem;
   display: flex;
 `;
 

@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const H1 = styled.h1<{ center?: boolean }>`
   color: var(--dark-purple);
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 500;
-  line-height: 32px;
+  line-height: 2rem;
 `;
 
 export const Body = styled.p`
@@ -14,6 +14,26 @@ export const Body = styled.p`
   font-weight: 400;
   line-height: 1rem;
   letter-spacing: -0.0037rem;
+`;
+
+export const BodySecondary = styled.p<{
+  $disable?: boolean;
+  $regular?: boolean;
+}>`
+  color: ${({ $disable }) =>
+    $disable ? "var(--light-gray)" : "var(--dark-purple)"};
+  font-weight: ${({ $regular }) => ($regular ? "500" : "400")};
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.5rem;
+`;
+
+export const StrongBodySecondary = styled.span`
+  color: var(--dark-purple);
+  font-weight: 600;
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.5rem;
 `;
 
 interface InputLabelProps {

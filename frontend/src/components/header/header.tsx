@@ -1,11 +1,16 @@
-import avatar from "../../assets/40px/image/none.svg";
 import { Bell } from "../../assets/bell";
 import { Copy } from "../../assets/copy";
 import { Help } from "../../assets/help";
 import { OrgLogo } from "../../assets/org-logo";
+import { AvatarMenu } from "../avatar-menu/avatar-menu";
 import * as S from "./header.style";
 
-export const Header = () => {
+type HeaderProps = {
+  onCopyClick?: () => void;
+  onAvatarClick?: () => void;
+};
+
+export const Header = ({ onCopyClick, onAvatarClick }: HeaderProps) => {
   return (
     <S.Container>
       <S.ContainerLogo>
@@ -15,6 +20,7 @@ export const Header = () => {
       <S.ContainerOptions>
         <S.CopyButtonContainer>
           <S.CopyButton
+            onClick={onCopyClick}
             label="Copiar meu código"
             leftIcon={<Copy />}
             type="button"
@@ -29,7 +35,7 @@ export const Header = () => {
           <Bell />
         </S.IconsWrapper>
 
-        <img content="fitContent" src={avatar} />
+        <AvatarMenu onClick={onAvatarClick} />
       </S.ContainerOptions>
     </S.Container>
   );

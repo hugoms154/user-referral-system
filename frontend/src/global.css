@@ -10,10 +10,17 @@
   --light-purple: #CEBFE8;
   --purple: #7249BC;
   --green: #BEDE18;
+  --light-green: #F2F8D1;
+  --light-green: #F2F8D1;
   --light-red: #FEF5F6;
   --red: #E42F44;
   --white: #FFFFFF;
   --background-content: #FFFFFF;
+
+  --toastify-color-light: var(--light-green);
+  --toastify-toast-min-height: 2.75rem;
+  --toastify-font-family: 'Inter', sans-serif;
+  --toastify-text-color-light: var(--gray);
 }
 
 * {
@@ -29,7 +36,17 @@ body {
 }
 
 body, input, textarea, button {
-  font-family: "inter", sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 1rem;
+}
+
+.Toastify__toast {
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.Toastify__close-button {
+  align-self: center;
 }
