@@ -70,7 +70,10 @@ export const SignUpPage = () => {
 
   function disabledButton() {
     if (step === "1") {
-      return methods.getFieldState("email").invalid;
+      return (
+        !methods.getFieldState("email").isDirty ||
+        !!methods.getFieldState("email").error?.message
+      );
     }
     if (step === "2") {
       return methods.getFieldState("confirmPassword").invalid;
@@ -82,12 +85,12 @@ export const SignUpPage = () => {
     <FormProvider {...methods}>
       <S.Root>
         <Header $hideButtons />
-        <S.Container style={{ display: "flex", flexDirection: "column" }}>
-          <form style={{ flex: "1" }}>
+        <S.Container>
+          <S.FormContainer>
             {step === "1" && <Step1 />}
             {step === "2" && <Step2 />}
             {step === "3" && <Step3 />}
-          </form>
+          </S.FormContainer>
           <S.ProgressBar $progress={progress} />
           <S.FooterWrapper>
             {step !== "1" && (

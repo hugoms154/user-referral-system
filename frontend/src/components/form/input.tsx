@@ -14,7 +14,7 @@ type TypesInput = "text" | "password" | "email" | "date" | "number";
 export interface InputProps extends HTMLProps<HTMLInputElement> {
   type?: TypesInput;
   label?: string;
-  error: string;
+  error?: string;
   link?: string;
 }
 
@@ -35,10 +35,10 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   }
 
   return (
-    <>
+    <div>
       <S.InputTextContainer>
         {label && <Typography.InputLabel>{label}</Typography.InputLabel>}
-        {link && <S.LinkText>{link}</S.LinkText>}
+        {link && <Typography.LinkText>{link}</Typography.LinkText>}
       </S.InputTextContainer>
 
       <S.InputRoot
@@ -62,7 +62,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           </S.ButtonPassword>
         )}
       </S.InputRoot>
-    </>
+    </div>
   );
 };
 

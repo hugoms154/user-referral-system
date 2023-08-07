@@ -11,9 +11,17 @@ export const Root = styled.div`
 export const Container = styled.div`
   border-radius: 1rem;
   display: flex;
+  flex-direction: column;
   background-color: var(--background-content);
   height: 100%;
   width: 100%;
+`;
+
+export const FormContainer = styled.form`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 type ProgressBarProps = {

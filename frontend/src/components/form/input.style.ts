@@ -58,16 +58,3 @@ export const InputTextContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
-
-export const LinkText = styled.a`
-  color: var(--link);
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--dark-purple);
-    transition: 0.3s linear;
-  }
-`;
