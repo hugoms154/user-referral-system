@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { ArrowRight } from "../../../../assets/arrow-right";
 import { Check } from "../../../../assets/check";
@@ -24,6 +25,7 @@ type LoginFormInput = z.infer<typeof loginFormSchema>;
 export const LoginPage = () => {
   const { signIn } = useAuth();
   const [apiError, setApiError] = useState("");
+  const navigate = useNavigate();
 
   const {
     register,
@@ -50,6 +52,10 @@ export const LoginPage = () => {
     }
 
     localStorage.setItem(`${import.meta.env.VITE_KEY_STORAGE}:login`, "true");
+  }
+
+  function handleSignUp() {
+    navigate("/sign-up");
   }
 
   return (
@@ -102,11 +108,19 @@ export const LoginPage = () => {
 
             <Button
               label="Entrar"
+              $fullWidth
               rightIcon={<ArrowRight />}
               type="submit"
               disabled={isSubmitting || !isValid}
             />
           </form>
+
+          <Button
+            label="Novo por aqui? Criar conta."
+            $variant="link"
+            $textCenter
+            onClick={handleSignUp}
+          />
         </S.FormContainer>
       </S.Container>
 

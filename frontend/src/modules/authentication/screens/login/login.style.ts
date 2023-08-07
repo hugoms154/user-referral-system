@@ -4,6 +4,7 @@ export const Root = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
   height: 100vh;
 `;
 

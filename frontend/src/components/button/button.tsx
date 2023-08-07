@@ -9,8 +9,8 @@ export type ButtonProps = React.DetailedHTMLProps<
   leftIcon?: ReactNode;
   label: string;
   $textCenter?: boolean;
-  $disabled?: boolean;
   $variant?: ButtonVariant;
+  $fullWidth?: boolean;
 };
 
 export const Button = ({
@@ -18,10 +18,11 @@ export const Button = ({
   leftIcon,
   label,
   $variant = "default",
+  $fullWidth = false,
   ...rest
 }: ButtonProps) => {
   return (
-    <ButtonRoot $variant={$variant} {...rest}>
+    <ButtonRoot $variant={$variant} $fullWidth={$fullWidth} {...rest}>
       {leftIcon && <>{leftIcon}</>}
       {label}
       {rightIcon && <>{rightIcon}</>}

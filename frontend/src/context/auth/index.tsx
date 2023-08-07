@@ -2,7 +2,12 @@ import { ApolloError, useMutation } from "@apollo/client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AUTHENTICATE_MUTATION } from "../../data/graphql";
-import { AuthContextData, ChildrenData, PayloadLogin } from "./types";
+import {
+  AuthContextData,
+  ChildrenData,
+  PayloadLogin,
+  PayloadSignUp,
+} from "./types";
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
@@ -44,6 +49,14 @@ const AuthProvider = ({ children }: ChildrenData) => {
     return { data, loading, error };
   };
 
+  const signUp = ({ email, password, referralCode }: PayloadSignUp) => {
+    // consultar da api
+    console.log("email: ", email);
+    console.log("password: ", password);
+    console.log("password: ", referralCode);
+    setIsLogged(true);
+  };
+
   const signOut = () => {
     localStorage.removeItem(`${import.meta.env.VITE_KEY_STORAGE}:login`);
     setIsLogged(false);
@@ -57,7 +70,7 @@ const AuthProvider = ({ children }: ChildrenData) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogged, signIn, signOut }}>
+    <AuthContext.Provider value={{ isLogged, signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   );

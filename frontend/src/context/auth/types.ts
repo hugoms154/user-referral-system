@@ -5,6 +5,12 @@ export type PayloadLogin = {
   password: string;
 };
 
+export type PayloadSignUp = {
+  email: string;
+  password: string;
+  referralCode?: string;
+};
+
 export type AuthContextData = {
   isLogged: boolean;
   signIn: ({ email, password }: PayloadLogin) => Promise<{
@@ -12,6 +18,7 @@ export type AuthContextData = {
     loading: boolean;
     error: any;
   }>;
+  signUp: ({ email, password, referralCode }: PayloadSignUp) => void;
   signOut: () => void;
 };
 

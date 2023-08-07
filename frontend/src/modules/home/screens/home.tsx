@@ -127,9 +127,10 @@ export const HomePage = () => {
                     />
 
                     <Button
+                      $fullWidth
                       label="Criar link personalizado"
                       type="submit"
-                      $disabled={isSubmitting || !isValid}
+                      disabled={isSubmitting || !isValid}
                     />
                   </form>
                 </S.LeftBoxContent>
@@ -161,7 +162,8 @@ export const HomePage = () => {
                       label="Copiar link personalizado"
                       type="button"
                       rightIcon={<Copy color="#FFFFFF" />}
-                      $disabled={isSubmitting || !isValid}
+                      disabled={isSubmitting || !isValid}
+                      $fullWidth
                       onClick={handleCopyLink}
                     />
 

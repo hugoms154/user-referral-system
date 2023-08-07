@@ -7,7 +7,11 @@ import { useAuth } from "../../context/auth";
 import { AvatarMenu } from "../avatar-menu/avatar-menu";
 import * as S from "./header.style";
 
-export const Header = () => {
+type HeaderProps = {
+  $hideButtons?: boolean;
+};
+
+export const Header = ({ $hideButtons = false }: HeaderProps) => {
   const { signOut } = useAuth();
 
   function onAvatarClick() {
@@ -29,26 +33,28 @@ export const Header = () => {
         <OrgLogo />
       </S.ContainerLogo>
 
-      <S.ContainerOptions>
-        <S.CopyButtonContainer>
-          <S.CopyButton
-            onClick={onCopyClick}
-            label="Copiar meu código"
-            leftIcon={<Copy />}
-            type="button"
-          />
-        </S.CopyButtonContainer>
+      {!$hideButtons && (
+        <S.ContainerOptions>
+          <S.CopyButtonContainer>
+            <S.CopyButton
+              onClick={onCopyClick}
+              label="Copiar meu código"
+              leftIcon={<Copy />}
+              type="button"
+            />
+          </S.CopyButtonContainer>
 
-        <S.IconsWrapper>
-          <Help />
-        </S.IconsWrapper>
+          <S.IconsWrapper>
+            <Help />
+          </S.IconsWrapper>
 
-        <S.IconsWrapper>
-          <Bell />
-        </S.IconsWrapper>
+          <S.IconsWrapper>
+            <Bell />
+          </S.IconsWrapper>
 
-        <AvatarMenu onClick={onAvatarClick} />
-      </S.ContainerOptions>
+          <AvatarMenu onClick={onAvatarClick} />
+        </S.ContainerOptions>
+      )}
     </S.Container>
   );
 };
