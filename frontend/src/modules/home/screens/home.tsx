@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,8 +13,15 @@ import { Button } from "../../../components/button";
 import { Input } from "../../../components/form";
 import { Header } from "../../../components/header/header";
 import * as Typography from "../../../components/typography";
-import { useAuth } from "../../../context/auth";
+import { CREATE_AFFILIATED_LINK_MUTATION } from "../../../data/graphql";
 import * as S from "./home.style";
+
+interface CreateAffiliatedLinkResponse {
+  createAffiliatedLink: {
+    id: string;
+    sourceLink: string;
+  };
+}
 
 const inputSchema = z.object({
   url: z.string().min(1),
@@ -21,18 +29,11 @@ const inputSchema = z.object({
 
 type CopyInput = z.infer<typeof inputSchema>;
 
-const mockData = {
-  createdLink: "https://linkpersonalizado.com.br",
-};
-
 export const HomePage = () => {
   const [createdLink, setCreatedLink] = useState<null | string>(null);
-
-  const { signOut } = useAuth();
-
-  function handleLogout() {
-    signOut();
-  }
+  const [createAffiliatedLink] = useMutation<CreateAffiliatedLinkResponse>(
+    CREATE_AFFILIATED_LINK_MUTATION
+  );
 
   const {
     handleSubmit,
@@ -43,9 +44,19 @@ export const HomePage = () => {
     mode: "onBlur",
   });
 
-  async function handleGenerator() {
-    // receber da api o link gerado
-    setCreatedLink(mockData.createdLink);
+  async function handleGenerator(input: CopyInput) {
+    createAffiliatedLink({
+      variables: {
+        data: {
+          userId: 1,
+          sourceLink: input.url,
+        },
+      },
+      onCompleted: (data) => {
+        console.log(data);
+        setCreatedLink(`http://localhost:4000/${data.createAffiliatedLink.id}`);
+      },
+    });
   }
 
   function handleCreateNewLink() {
@@ -53,10 +64,11 @@ export const HomePage = () => {
   }
 
   async function handleCopyLink() {
-    toast.dismiss("successfull-copied");
-    await navigator.clipboard.writeText(mockData.createdLink);
+    console.log("COPIANDO LINK", createdLink);
+    toast.dismiss("successful-copied");
+    await navigator.clipboard.writeText(createdLink!);
     toast.success("Link copiado com sucesso", {
-      toastId: "successfull-copied",
+      toastId: "successful-copied",
     });
   }
 
@@ -75,7 +87,7 @@ export const HomePage = () => {
         icon={<ToastIcon />}
       />
       <S.Root>
-        <Header onCopyClick={handleCopyLink} onAvatarClick={handleLogout} />
+        <Header />
         <S.ContainerBoxes>
           <S.LeftContainerBoxes>
             <S.LeftTopBox>

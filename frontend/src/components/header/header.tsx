@@ -1,16 +1,28 @@
+import { toast } from "react-toastify";
 import { Bell } from "../../assets/bell";
 import { Copy } from "../../assets/copy";
 import { Help } from "../../assets/help";
 import { OrgLogo } from "../../assets/org-logo";
+import { useAuth } from "../../context/auth";
 import { AvatarMenu } from "../avatar-menu/avatar-menu";
 import * as S from "./header.style";
 
-type HeaderProps = {
-  onCopyClick?: () => void;
-  onAvatarClick?: () => void;
-};
+export const Header = () => {
+  const { signOut } = useAuth();
 
-export const Header = ({ onCopyClick, onAvatarClick }: HeaderProps) => {
+  function onAvatarClick() {
+    signOut();
+  }
+
+  async function onCopyClick() {
+    console.log("COPIANDO LINK", "createdLink");
+    toast.dismiss("successful-copied");
+    await navigator.clipboard.writeText("createdLink!");
+    toast.success("Link copiado com sucesso", {
+      toastId: "successful-copied",
+    });
+  }
+
   return (
     <S.Container>
       <S.ContainerLogo>
