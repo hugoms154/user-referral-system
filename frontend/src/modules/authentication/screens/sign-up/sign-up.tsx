@@ -25,7 +25,7 @@ const signUpSchema = z
     confirmPassword: z
       .string()
       .regex(/^(?=.*\d)(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/),
-    referralCode: z.string().min(1).optional(),
+    referralCode: z.string().optional(),
   })
   .refine((data) => data.confirmPassword === data.password, {
     message: "As senhas estão diferentes",
