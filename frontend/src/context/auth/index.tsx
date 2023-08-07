@@ -86,6 +86,7 @@ const AuthProvider = ({ children }: ChildrenData) => {
 
   const signOut = () => {
     localStorage.removeItem(`${import.meta.env.VITE_KEY_STORAGE}:login`);
+    setUser(null);
     setIsLogged(false);
   };
 

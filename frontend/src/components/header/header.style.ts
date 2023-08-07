@@ -17,6 +17,7 @@ export const ContainerLogo = styled.div`
   flex: 1;
   margin-right: auto;
   color: var(--dark-purple);
+  cursor: pointer;
 `;
 
 export const ContainerOptions = styled.div`

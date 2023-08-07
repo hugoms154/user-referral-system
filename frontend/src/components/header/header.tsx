@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Bell } from "../../assets/bell";
 import { Copy } from "../../assets/copy";
@@ -13,6 +14,7 @@ type HeaderProps = {
 
 export const Header = ({ $hideButtons = false }: HeaderProps) => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   function onAvatarClick() {
     signOut();
@@ -29,9 +31,17 @@ export const Header = ({ $hideButtons = false }: HeaderProps) => {
     }
   }
 
+  function onLogoClick() {
+
+    console.log(user)
+    if (user === null) {
+      navigate("/");
+    }
+  }
+
   return (
     <S.Container>
-      <S.ContainerLogo>
+      <S.ContainerLogo onClick={onLogoClick}>
         <OrgLogo />
       </S.ContainerLogo>
 
