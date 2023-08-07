@@ -13,6 +13,7 @@ import { Button } from "../../../components/button";
 import { Input } from "../../../components/form";
 import { Header } from "../../../components/header/header";
 import * as Typography from "../../../components/typography";
+import { useAuth } from "../../../context/auth";
 import { CREATE_AFFILIATED_LINK_MUTATION } from "../../../data/graphql";
 import * as S from "./home.style";
 
@@ -31,6 +32,7 @@ type CopyInput = z.infer<typeof inputSchema>;
 
 export const HomePage = () => {
   const [createdLink, setCreatedLink] = useState<null | string>(null);
+  const { user } = useAuth();
   const [createAffiliatedLink] = useMutation<CreateAffiliatedLinkResponse>(
     CREATE_AFFILIATED_LINK_MUTATION
   );
@@ -48,7 +50,7 @@ export const HomePage = () => {
     createAffiliatedLink({
       variables: {
         data: {
-          userId: 1,
+          userId: +user?.id,
           sourceLink: input.url,
         },
       },

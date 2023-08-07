@@ -11,10 +11,26 @@ export type PayloadSignUp = {
   referralCode?: string;
 };
 
+export interface Authenticate {
+  authenticate: {
+    token: string;
+    user: User;
+  };
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  indicatedBy?: string;
+  referralCode: string;
+}
+
 export type AuthContextData = {
   isLogged: boolean;
+  user: User | null;
   signIn: ({ email, password }: PayloadLogin) => Promise<{
-    data: unknown;
+    data: Authenticate;
     loading: boolean;
     error: any;
   }>;

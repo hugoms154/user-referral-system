@@ -12,19 +12,21 @@ type HeaderProps = {
 };
 
 export const Header = ({ $hideButtons = false }: HeaderProps) => {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   function onAvatarClick() {
     signOut();
   }
 
   async function onCopyClick() {
-    console.log("COPIANDO LINK", "createdLink");
-    toast.dismiss("successful-copied");
-    await navigator.clipboard.writeText("createdLink!");
-    toast.success("Link copiado com sucesso", {
-      toastId: "successful-copied",
-    });
+    if (user?.referralCode) {
+      console.log("COPIANDO LINK", "createdLink");
+      toast.dismiss("successful-copied");
+      await navigator.clipboard.writeText(user.referralCode);
+      toast.success("Link copiado com sucesso", {
+        toastId: "successful-copied",
+      });
+    }
   }
 
   return (
