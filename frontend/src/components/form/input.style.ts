@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 type InputRootProps = {
-  error: string;
+  error: boolean;
   outline?: boolean;
 };
 
@@ -27,7 +27,7 @@ export const InputRoot = styled.div<InputRootProps>`
     `}
 
   ${({ error }) =>
-    error.length > 0 &&
+    error &&
     css`
       border-color: var(--red);
     `};

@@ -23,6 +23,7 @@ type LoginFormInput = z.infer<typeof loginFormSchema>;
 
 export const LoginPage = () => {
   const { signIn } = useAuth();
+  const [apiError, setApiError] = useState("");
 
   const {
     register,
@@ -39,13 +40,16 @@ export const LoginPage = () => {
     setChecked(!checked);
   }
 
-  // async function handleLogin(data: LoginFormInput) {
   async function handleLogin({ email, password }: LoginFormInput) {
-    // const { email, password } = data;
+    const { data, error, loading } = await signIn({ email, password });
+    console.log("LOGIN RESPONSE", { data, error, loading });
 
-    // TODO: async request
+    if (error) {
+      setApiError(error?.message ?? "error");
+      return;
+    }
+
     localStorage.setItem(`${import.meta.env.VITE_KEY_STORAGE}:login`, "true");
-    signIn({ email, password });
   }
 
   return (
@@ -62,7 +66,7 @@ export const LoginPage = () => {
               type="email"
               placeholder="digite seu e-mail"
               required
-              error={errors.email?.message || ""}
+              error={errors.email?.message || apiError}
               {...register("email")}
             />
 
@@ -71,11 +75,11 @@ export const LoginPage = () => {
               type="password"
               link="Esqueci minha senha"
               required
-              error={errors.password?.message || ""}
+              error={errors.password?.message || apiError}
               {...register("password")}
             />
 
-            {(errors.email || errors.password) && (
+            {(errors.email || errors.password || apiError) && (
               <Message
                 icon={<Warning />}
                 message="Usuário ou senha incorretos"

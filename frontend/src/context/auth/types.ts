@@ -7,7 +7,11 @@ export type PayloadLogin = {
 
 export type AuthContextData = {
   isLogged: boolean;
-  signIn: ({ email, password }: PayloadLogin) => void;
+  signIn: ({ email, password }: PayloadLogin) => Promise<{
+    data: unknown;
+    loading: boolean;
+    error: any;
+  }>;
   signOut: () => void;
 };
 

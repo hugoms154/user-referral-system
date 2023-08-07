@@ -14,7 +14,7 @@ export const HomePage = () => {
       <Header />
       <h1>Home</h1>
       <button onClick={handleLogout}>
-        <h2>FILHO DA PUTA</h2>
+        <h2>SIGN OUT</h2>
       </button>
     </S.Root>
   )

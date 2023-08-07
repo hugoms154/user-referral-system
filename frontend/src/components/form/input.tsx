@@ -42,7 +42,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       </S.InputTextContainer>
 
       <S.InputRoot
-        error={error}
+        error={error.length > 0}
         onBlur={handleBlur}
         onFocus={handleFocus}
         outline={showOutline}
